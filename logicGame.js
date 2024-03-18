@@ -3,7 +3,7 @@ window.onload = function() {
     var filas = parseInt(parametrosURL.get('cantFilas'));
     var columnas = parseInt(parametrosURL.get('cantColumnas'));
     var minas = parseInt(parametrosURL.get('cantidadMinas'));
-    var primerTurno = true; // Bandera para rastrear si es el primer turno del jugador
+    var primerTurno = true; 
 
     crearTablero(filas, columnas);
     minasRestantes(minas);
@@ -11,10 +11,10 @@ window.onload = function() {
     var cuadros = document.querySelectorAll('.cuadro');
     cuadros.forEach(cuadro => {
         cuadro.addEventListener('click', function(event) {
-            event.preventDefault(); // Evitar el comportamiento predeterminado del clic derecho
-            if (primerTurno) { // Verificar si es el primer turno del jugador
-                primerTurno = false; // Cambiar el estado del primer turno
-                colocarMinas(filas, columnas, minas); // Colocar las minas después del primer clic del jugador
+            event.preventDefault(); 
+            if (primerTurno) { 
+                primerTurno = false; 
+                colocarMinas(filas, columnas, minas); 
             }
 
             if (!juegoTerminado()) {
@@ -40,6 +40,7 @@ window.onload = function() {
                     cuadro.classList.remove('bandera'); // Quitar la bandera
                     cuadro.style.backgroundColor = ''; // Restaurar el color original del cuadro
                 }
+                minasRestantes(minas); // Actualizar el contador de minas restantes
             }
         });
     });
@@ -72,10 +73,10 @@ function clicEnCuadro() {
     if (!juegoTerminado()) { 
         var cuadro = this;
         if (cuadro.classList.contains('mina')) {
+            deshabilitarTablero(); 
             mostrarMina(cuadro);
             marcarMinasRestantes();
             mostrarMensaje('¡Has caído en una mina! Juego terminado.');
-            deshabilitarTablero(); 
         } else {
             var minasAdyacentes = contarMinasAdyacentes(cuadro);
             cuadro.innerText = minasAdyacentes;
@@ -128,7 +129,12 @@ function colocarMinas(filas, columnas, cantidadMinas) {
 }
 
 function minasRestantes(minas) {
-    document.querySelector('#minas').innerText = `Minas: ${minas}`;
+    var contadorMinas = document.querySelector('#minas');
+    contadorMinas.innerText = `Minas: ${minas}`;
+
+    var cuadrosConBandera = document.querySelectorAll('.bandera');
+    var minasRestantes = minas - cuadrosConBandera.length;
+    contadorMinas.innerText = `Minas: ${minasRestantes}`;
 }
 
 function limpiarTablero() {
