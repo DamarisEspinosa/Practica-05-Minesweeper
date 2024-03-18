@@ -53,7 +53,6 @@ body {
 }
 
 .game {
-    border: 2px solid green;
     background-color: #c2ffdc7e;
     width: 90%;
     display: flex;
@@ -67,7 +66,6 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border: 2px solid black;
     margin: 15px;
 }
 #cantFilas, #cantColumnas, #cantidadMinas {
