@@ -1,9 +1,10 @@
+var primerTurno = true; 
+
 window.onload = function() {
     var parametrosURL = new URLSearchParams(window.location.search);
     var filas = parseInt(parametrosURL.get('cantFilas'));
     var columnas = parseInt(parametrosURL.get('cantColumnas'));
     var minas = parseInt(parametrosURL.get('cantidadMinas'));
-    var primerTurno = true; 
 
     crearTablero(filas, columnas);
     minasRestantes(minas);
