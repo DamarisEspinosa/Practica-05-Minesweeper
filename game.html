@@ -10,10 +10,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Finger+Paint&display=swap" rel="stylesheet"> 
 </head>
 <body>
-    <form class="contenedor" action="game.html" method="get">
-        <div class="titulo">Minesweeper</div>
-        <input type="number" id="tamanioTablero" name="tamanioTablero" min="1" placeholder="Ingrese el tamaño del tablero">
-        <button class="boton" type="submit">Crear tablero</button>
-    </form>
+    <div class="titulo2">Minesweeper</div>
+    <div class="todoJuego">
+        <div class="tablero" id="contenedor-tablero"></div>
+        <div class="info">
+            Aquí va a ir la información del juego
+        </div>
+    </div>
+    <script src="logicGame.js"></script>
 </body>
 </html>
