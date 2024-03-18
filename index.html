@@ -9,10 +9,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Finger+Paint&display=swap" rel="stylesheet"> 
 </head>
-<body>
+<body class="index">
+    <div class="titulo">Minesweeper</div>
     <form class="contenedor" action="game.html" method="get">
-        <div class="titulo">Minesweeper</div>
-        <input type="number" id="tamanioTablero" name="tamanioTablero" min="1" placeholder="Ingrese el tamaño del tablero">
+        <input type="number" id="tamanioTablero" name="tamanioTablero" min="5" placeholder="Ingrese el tamaño del tablero">
+        <input type="number" id="cantidadMinas" name="cantidadMinas" min="1" placeholder="Ingrese la cantidad de minas">
         <button class="boton" type="submit">Crear tablero</button>
     </form>
 </body>

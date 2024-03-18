@@ -12,8 +12,22 @@ body {
     font-family: 'Finger Paint', cursive;
     background-attachment: fixed;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.index{
+    background-image: url('img/fondo1.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    height: 100vh;
+    margin: 0;
 }
 .contenedor {
+    border-radius: 30px;
+    background-color: #c2ffdc7e;
+    width: 50%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -22,14 +36,11 @@ body {
 .titulo {
     font-size: 90px;
     text-transform: uppercase;
-    margin: 90px;
-    /*border: 2px solid;*/
-    padding: 10px;
-}
-.titulo2 {
-    font-size: 70px;
-    text-transform: uppercase;
     margin: 20px;
+    background-color: #c2ffdcaf;
+    border-radius: 30px;
+    border: 2px solid;
+    padding: 10px;
 }
 .boton {
     padding: 10px;
@@ -43,10 +54,29 @@ body {
 .boton:hover {
     background-color: #7167f5;
 }
-#tamanioTablero {
+
+.game {
+    border: 2px solid green;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.tablero {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid black;
+    margin: 15px;
+}
+#tamanioTablero, #cantidadMinas {
     font-family: 'Finger Paint', cursive;
     text-align: center;
     padding: 10px;
+    margin: 20px;
     width: 300px;
     background-color: transparent;
     border-radius: 25px;
@@ -61,11 +91,4 @@ body {
     background-color: #6158db;
     border: 1px solid;
     float: left;
-}
-.tablero {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid black;
 }
