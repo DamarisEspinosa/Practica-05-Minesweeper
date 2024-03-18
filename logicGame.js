@@ -3,35 +3,79 @@ window.onload = function() {
     var filas = parseInt(parametrosURL.get('cantFilas'));
     var columnas = parseInt(parametrosURL.get('cantColumnas'));
     var minas = parseInt(parametrosURL.get('cantidadMinas'));
+    var primerTurno = true; // Bandera para rastrear si es el primer turno del jugador
 
     crearTablero(filas, columnas);
-    colocarMinas(filas, columnas, minas);
     minasRestantes(minas);
 
     var cuadros = document.querySelectorAll('.cuadro');
     cuadros.forEach(cuadro => {
-        cuadro.addEventListener('click', clicEnCuadro);
+        cuadro.addEventListener('click', function(event) {
+            event.preventDefault(); // Evitar el comportamiento predeterminado del clic derecho
+            if (primerTurno) { // Verificar si es el primer turno del jugador
+                primerTurno = false; // Cambiar el estado del primer turno
+                colocarMinas(filas, columnas, minas); // Colocar las minas después del primer clic del jugador
+            }
+
+            if (!juegoTerminado()) {
+                if (cuadro.classList.contains('mina')) {
+                    mostrarMina(cuadro);
+                    marcarMinasRestantes();
+                    mostrarMensaje('¡Has caído en una mina! Juego terminado.');
+                    deshabilitarTablero();
+                } else {
+                    var minasAdyacentes = contarMinasAdyacentes(cuadro);
+                    cuadro.innerText = minasAdyacentes;
+                }
+            }
+        });
+
+        cuadro.addEventListener('contextmenu', function(event) {
+            event.preventDefault(); // Evitar el menú contextual predeterminado
+            if (!cuadro.classList.contains('descubierto')) {
+                if (!cuadro.classList.contains('bandera')) {
+                    cuadro.classList.add('bandera'); // Agregar la bandera
+                    cuadro.style.backgroundColor = 'yellow'; // Cambiar el color del cuadro
+                } else {
+                    cuadro.classList.remove('bandera'); // Quitar la bandera
+                    cuadro.style.backgroundColor = ''; // Restaurar el color original del cuadro
+                }
+            }
+        });
     });
 
     var botonReinicio = document.getElementById('restart');
-    botonReinicio.addEventListener('click', limpiarTablero);
+    botonReinicio.addEventListener('click', function() {
+        primerTurno = true; // Reiniciar la bandera del primer turno al reiniciar el juego
+        limpiarTablero();
+        minasRestantes(minas);
+    });
 };
+
+
+function marcarBandera(cuadro) {
+    if (!cuadro.classList.contains('bandera')) {
+        cuadro.classList.add('bandera');
+    } else {
+        cuadro.classList.remove('bandera');
+    }
+}
 
 function deshabilitarTablero() {
     var cuadros = document.querySelectorAll('.cuadro');
     cuadros.forEach(cuadro => {
-        cuadro.removeEventListener('click', clicEnCuadro); // Eliminar el controlador de eventos
+        cuadro.removeEventListener('click', clicEnCuadro); 
     });
 }
 
 function clicEnCuadro() {
-    if (!juegoTerminado()) { // Verificar si el juego ha terminado
+    if (!juegoTerminado()) { 
         var cuadro = this;
         if (cuadro.classList.contains('mina')) {
             mostrarMina(cuadro);
             marcarMinasRestantes();
             mostrarMensaje('¡Has caído en una mina! Juego terminado.');
-            deshabilitarTablero(); // Deshabilitar el tablero
+            deshabilitarTablero(); 
         } else {
             var minasAdyacentes = contarMinasAdyacentes(cuadro);
             cuadro.innerText = minasAdyacentes;
@@ -43,10 +87,10 @@ function juegoTerminado() {
     var cuadros = document.querySelectorAll('.cuadro');
     for (var i = 0; i < cuadros.length; i++) {
         if (!cuadros[i].innerText && !cuadros[i].classList.contains('mina')) {
-            return false; // Si hay algún cuadro vacío que no es una mina, el juego no ha terminado
+            return false; 
         }
     }
-    return true; // Si no hay cuadros vacíos que no sean minas, el juego ha terminado
+    return true; 
 }
 
 function crearTablero(filas, columnas) {
@@ -92,7 +136,7 @@ function limpiarTablero() {
     cuadros.forEach(cuadro => {
         cuadro.classList.remove('mina');
         cuadro.style.backgroundColor = '';
-        cuadro.innerText = ''; // Limpiar el texto dentro del cuadro
+        cuadro.innerText = ''; 
     });
 }
 
@@ -114,13 +158,13 @@ function contarMinasAdyacentes(cuadro) {
 }
 
 function mostrarMina(cuadro) {
-    cuadro.style.backgroundColor = 'red'; // Marcar el cuadro en rojo
+    cuadro.style.backgroundColor = 'red'; 
 }
 
 function marcarMinasRestantes() {
     var minas = document.querySelectorAll('.mina');
     minas.forEach(mina => {
-        mina.style.backgroundColor = 'red'; // Marcar todas las minas restantes en rojo
+        mina.style.backgroundColor = 'red'; 
     });
 }
 
@@ -129,6 +173,6 @@ function mostrarMensaje(mensaje) {
     mensajeElemento.innerText = mensaje;
     mensajeElemento.style.color = 'red';
     var contenedorMensaje = document.getElementById('mensaje');
-    contenedorMensaje.innerHTML = ''; // Limpiar mensajes anteriores
-    contenedorMensaje.appendChild(mensajeElemento); // Agregar el mensaje al contenedor
+    contenedorMensaje.innerHTML = ''; 
+    contenedorMensaje.appendChild(mensajeElemento); 
 }
